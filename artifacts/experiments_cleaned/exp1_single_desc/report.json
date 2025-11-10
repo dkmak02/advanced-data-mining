@@ -1,0 +1,117 @@
+{
+  "action": {
+    "precision": 0.8888888888888888,
+    "recall": 0.1038961038961039,
+    "f1-score": 0.18604651162790697,
+    "support": 77.0
+  },
+  "adventure": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 37.0
+  },
+  "animation": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 4.0
+  },
+  "comedy": {
+    "precision": 0.5787234042553191,
+    "recall": 0.3309002433090024,
+    "f1-score": 0.42105263157894735,
+    "support": 411.0
+  },
+  "crime": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 20.0
+  },
+  "documentary": {
+    "precision": 1.0,
+    "recall": 0.02564102564102564,
+    "f1-score": 0.05,
+    "support": 39.0
+  },
+  "drama": {
+    "precision": 0.5816636308439587,
+    "recall": 0.9503968253968254,
+    "f1-score": 0.7216572504708098,
+    "support": 1008.0
+  },
+  "family": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 10.0
+  },
+  "fantasy": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 10.0
+  },
+  "history": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 4.0
+  },
+  "horror": {
+    "precision": 0.6597938144329897,
+    "recall": 0.28699551569506726,
+    "f1-score": 0.4,
+    "support": 223.0
+  },
+  "music": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 14.0
+  },
+  "mystery": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 1.0
+  },
+  "romance": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 12.0
+  },
+  "science fiction": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 10.0
+  },
+  "thriller": {
+    "precision": 0.42857142857142855,
+    "recall": 0.07142857142857142,
+    "f1-score": 0.12244897959183673,
+    "support": 126.0
+  },
+  "western": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1-score": 0.0,
+    "support": 4.0
+  },
+  "accuracy": 0.5850746268656717,
+  "macro avg": {
+    "precision": 0.24339065688191674,
+    "recall": 0.10407401678627035,
+    "f1-score": 0.11183561019232358,
+    "support": 2010.0
+  },
+  "weighted avg": {
+    "precision": 0.5635575741804218,
+    "recall": 0.5850746268656717,
+    "f1-score": 0.508152882028579,
+    "support": 2010.0
+  }
+}

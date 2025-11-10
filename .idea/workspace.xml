@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="23909d64-3dd0-4280-b2bb-be866f842f5d" name="Changes" comment="basic script to get movies url from letterbox">
-      <change afterPath="$PROJECT_DIR$/get-movies-data.py" afterDir="false" />
+    <list default="true" id="23909d64-3dd0-4280-b2bb-be866f842f5d" name="Changes" comment="push scapred data">
+      <change afterPath="$PROJECT_DIR$/clean-genres.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/advanced-data-mining.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/advanced-data-mining.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/movies_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/movies_data.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,30 +43,61 @@
   &quot;associatedIndex&quot;: 4
 }</component>
   <component name="ProjectId" id="33yclKRuLwUPKLwyvys1mWqrqmH" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Python.$FileDir$.executor&quot;: &quot;Run&quot;,
     &quot;Python.get-movies-data.executor&quot;: &quot;Run&quot;,
     &quot;Python.get-movies-url.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/dkmak/Desktop/studia/advanced-data-mining&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="$FileDir$" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="advanced-data-mining" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.14 (advanced-data-mining)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$FileDir$" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-PY-242.23726.102" />
-        <option value="bundled-python-sdk-5e1850174b45-399fe30bd8c1-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-242.23726.102" />
+        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-PY-252.27397.106" />
+        <option value="bundled-python-sdk-4e2b1448bda8-9a97661f3031-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-252.27397.106" />
       </set>
     </attachedChunks>
   </component>
@@ -76,7 +110,11 @@
       <option name="presentableId" value="Default" />
       <updated>1760292903688</updated>
       <workItem from="1760292903842" duration="8689000" />
-      <workItem from="1760337151238" duration="1600000" />
+      <workItem from="1760337151238" duration="2533000" />
+      <workItem from="1760552813847" duration="499000" />
+      <workItem from="1762773450185" duration="379000" />
+      <workItem from="1762773850634" duration="248000" />
+      <workItem from="1762774107853" duration="1117000" />
     </task>
     <task id="LOCAL-00001" summary="basic script to get movies url from letterbox">
       <option name="closed" value="true" />
@@ -86,7 +124,23 @@
       <option name="project" value="LOCAL" />
       <updated>1760293737693</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="get movies data from link">
+      <option name="closed" value="true" />
+      <created>1760353439132</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1760353439132</updated>
+    </task>
+    <task id="LOCAL-00003" summary="push scapred data">
+      <option name="closed" value="true" />
+      <created>1760552848882</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1760552848882</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,10 +148,14 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="basic script to get movies url from letterbox" />
-    <option name="LAST_COMMIT_MESSAGE" value="basic script to get movies url from letterbox" />
+    <MESSAGE value="get movies data from link" />
+    <MESSAGE value="push scapred data" />
+    <option name="LAST_COMMIT_MESSAGE" value="push scapred data" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/advanced_data_mining$get_movies_data.coverage" NAME="get-movies-data Coverage Results" MODIFIED="1760337309029" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/advanced_data_mining$test.coverage" NAME="test Coverage Results" MODIFIED="1762774131143" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/advanced_data_mining$get_movies_url.coverage" NAME="get-movies-url Coverage Results" MODIFIED="1760293350677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/advanced_data_mining$_FileDir_.coverage" NAME="$FileDir$ Coverage Results" MODIFIED="1762773709102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
