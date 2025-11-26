@@ -1,0 +1,202 @@
+true,pred,count
+drama,drama,864
+comedy,drama,380
+romance,drama,307
+horror,drama,294
+comedy,comedy,277
+thriller,drama,258
+crime,drama,226
+horror,horror,170
+action,drama,139
+adventure,drama,129
+drama,comedy,129
+fantasy,drama,110
+science fiction,drama,107
+romance,comedy,103
+crime,crime,100
+mystery,drama,90
+thriller,thriller,90
+action,action,84
+family,comedy,83
+animation,drama,81
+history,drama,81
+horror,thriller,72
+family,drama,69
+crime,thriller,66
+adventure,comedy,65
+drama,romance,64
+romance,romance,63
+horror,comedy,63
+animation,comedy,54
+documentary,drama,54
+thriller,action,53
+science fiction,science fiction,51
+music,drama,50
+thriller,horror,50
+thriller,crime,49
+adventure,action,48
+fantasy,comedy,48
+action,thriller,47
+crime,comedy,47
+crime,action,46
+war,drama,42
+science fiction,action,41
+comedy,romance,40
+action,comedy,38
+drama,thriller,38
+drama,crime,38
+mystery,horror,37
+adventure,adventure,33
+action,crime,33
+science fiction,comedy,31
+action,science fiction,28
+thriller,comedy,28
+mystery,thriller,28
+drama,horror,26
+drama,action,25
+horror,science fiction,24
+horror,action,23
+comedy,action,21
+science fiction,thriller,21
+adventure,thriller,20
+adventure,science fiction,20
+family,adventure,19
+fantasy,adventure,19
+fantasy,fantasy,18
+mystery,comedy,18
+fantasy,horror,17
+tv movie,drama,17
+music,comedy,16
+mystery,crime,16
+horror,crime,16
+fantasy,action,15
+thriller,science fiction,15
+science fiction,adventure,15
+science fiction,horror,15
+action,adventure,15
+western,drama,14
+comedy,horror,14
+tv movie,comedy,12
+comedy,thriller,12
+animation,adventure,12
+comedy,crime,12
+comedy,adventure,11
+mystery,mystery,11
+comedy,science fiction,10
+action,horror,10
+adventure,fantasy,10
+horror,mystery,10
+crime,horror,10
+family,family,10
+animation,science fiction,9
+documentary,comedy,8
+animation,action,8
+drama,science fiction,8
+drama,adventure,8
+family,fantasy,8
+thriller,mystery,7
+music,music,7
+fantasy,romance,7
+comedy,fantasy,7
+animation,family,7
+war,action,7
+thriller,romance,6
+mystery,science fiction,6
+family,action,6
+horror,fantasy,6
+mystery,action,6
+adventure,crime,6
+animation,fantasy,6
+fantasy,family,6
+crime,romance,6
+drama,war,6
+history,comedy,5
+animation,horror,5
+action,fantasy,5
+war,war,5
+adventure,horror,5
+romance,thriller,5
+thriller,adventure,5
+comedy,family,4
+documentary,documentary,4
+science fiction,crime,4
+adventure,romance,4
+family,science fiction,3
+crime,mystery,3
+fantasy,science fiction,3
+drama,family,3
+adventure,family,3
+romance,action,3
+music,documentary,3
+family,romance,3
+fantasy,thriller,3
+animation,thriller,3
+horror,romance,3
+western,comedy,3
+comedy,music,2
+documentary,music,2
+drama,music,2
+western,thriller,2
+horror,music,2
+drama,fantasy,2
+comedy,war,2
+history,romance,2
+war,adventure,2
+romance,adventure,2
+animation,romance,2
+animation,mystery,2
+science fiction,romance,2
+tv movie,thriller,2
+horror,adventure,2
+action,war,2
+music,romance,2
+history,horror,2
+mystery,romance,2
+comedy,documentary,2
+history,action,2
+action,mystery,1
+romance,music,1
+documentary,romance,1
+mystery,family,1
+war,crime,1
+romance,science fiction,1
+adventure,war,1
+war,comedy,1
+documentary,adventure,1
+western,crime,1
+family,horror,1
+romance,mystery,1
+drama,mystery,1
+romance,fantasy,1
+romance,horror,1
+mystery,fantasy,1
+music,thriller,1
+family,thriller,1
+mystery,adventure,1
+romance,war,1
+crime,science fiction,1
+thriller,fantasy,1
+music,action,1
+action,romance,1
+comedy,mystery,1
+family,mystery,1
+fantasy,mystery,1
+documentary,horror,1
+animation,crime,1
+thriller,war,1
+music,science fiction,1
+animation,music,1
+family,music,1
+history,war,1
+romance,family,1
+drama,documentary,1
+mystery,documentary,1
+thriller,documentary,1
+fantasy,documentary,1
+action,documentary,1
+romance,crime,1
+tv movie,music,1
+science fiction,fantasy,1
+adventure,mystery,1
+war,science fiction,1
+western,history,1

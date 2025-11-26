@@ -10,6 +10,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.metrics import hamming_loss, precision_recall_fscore_support
+from sklearn.metrics import confusion_matrix
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 
@@ -18,8 +23,13 @@ REV_COLUMN = 'AllReviews'
 GENRE_COLUMN = 'Genres'
 
 DEFAULT_GRID = {
-    'tfidf__max_features': [5000, 20000],
-    'clf__estimator__C': [0.1, 1.0],
+    # TF-IDF options
+    'tfidf__max_features': [5000, 20000, 50000],
+    'tfidf__ngram_range': [(1, 1), (1, 2)],
+    'tfidf__min_df': [1, 2],
+    # classifier options (OneVsRest with LogisticRegression as estimator)
+    'clf__estimator__C': [0.01, 0.1, 1.0, 10.0],
+    'clf__estimator__class_weight': [None, 'balanced'],
 }
 
 
@@ -173,11 +183,48 @@ def multilabel_experiment(df: pd.DataFrame, text_col: str, out_folder: Path, do_
     except Exception:
         pass
 
+    # Build confusion matrix between true primary label and predicted primary label
+    try:
+        true_primary = [lst[0] if lst else '___NONE' for lst in y_test]
+        pred_primary = []
+        for i in range(len(y_test)):
+            label = None
+            try:
+                if hasattr(scores, 'shape') and len(getattr(scores, 'shape', [])) == 2:
+                    row = scores[i]
+                    argmax = int(np.argmax(row))
+                    label = str(mlb.classes_[argmax])
+                else:
+                    nz = np.where(Y_pred[i])[0]
+                    if nz.size:
+                        label = str(mlb.classes_[int(nz[0])])
+            except Exception:
+                label = None
+            pred_primary.append(label if label is not None else '___NONE')
+
+        labels_for_cm = list(mlb.classes_)
+        if '___NONE' in true_primary or '___NONE' in pred_primary:
+            labels_for_cm = list(labels_for_cm) + ['___NONE']
+
+        cm = confusion_matrix(true_primary, pred_primary, labels=labels_for_cm)
+        np.savetxt(out_folder / 'confusion_matrix_primary.csv', cm, delimiter=',', fmt='%d')
+        plt.figure(figsize=(12, 10))
+        sns.heatmap(cm, annot=True, fmt='d', xticklabels=labels_for_cm, yticklabels=labels_for_cm, cmap='Blues')
+        plt.xlabel('predicted (primary)')
+        plt.ylabel('true (primary)')
+        plt.title('Primary-label confusion matrix')
+        plt.tight_layout()
+        plt.savefig(out_folder / 'confusion_matrix_primary.png')
+        plt.close()
+    except Exception:
+        pass
+
     return metrics
 
 
 def main():
     inp = Path('data/cleaned.json')
+    #inp = Path('data/movies_data.json')
     df = load_input(inp)
     # combine description + all reviews
     if REV_COLUMN in df.columns:

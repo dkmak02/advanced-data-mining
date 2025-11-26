@@ -4,3 +4,5 @@ joblib
 playwright
 aiofiles
 beautifulsoup4
+matplotlib
+seaborn

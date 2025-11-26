@@ -7,7 +7,12 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report, f1_score
+from sklearn.metrics import confusion_matrix
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 
@@ -16,8 +21,13 @@ REV_COLUMN = 'AllReviews'
 GENRE_COLUMN = 'Genres'
 
 DEFAULT_GRID = {
-    'tfidf__max_features': [5000, 20000],
-    'clf__C': [0.1, 1.0, 10.0],
+    # TF-IDF options
+    'tfidf__max_features': [5000, 20000, 50000],
+    'tfidf__ngram_range': [(1, 1), (1, 2)],
+    'tfidf__min_df': [1, 2],
+    # classifier options (LogisticRegression)
+    'clf__C': [0.01, 0.1, 1.0, 10.0],
+    'clf__class_weight': [None, 'balanced'],
 }
 
 
@@ -142,6 +152,8 @@ def single_label_experiment(df: pd.DataFrame, text_col: str, out_folder: Path, d
         'n_test': int(len(X_test)),
         'strict_accuracy': float(strict_acc),
         'match_accuracy_any_match': float(match_acc),
+        'f1_micro': float(f1_score(y_test, y_pred, average='micro', zero_division=0)),
+        'f1_macro': float(f1_score(y_test, y_pred, average='macro', zero_division=0)),
     }
 
     preds = []
@@ -159,11 +171,28 @@ def single_label_experiment(df: pd.DataFrame, text_col: str, out_folder: Path, d
     (out_folder / 'report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
     (out_folder / 'predictions.json').write_text(json.dumps(preds, ensure_ascii=False, indent=2), encoding='utf-8')
 
+    # save confusion matrix (single-label)
+    try:
+        labels_for_cm = sorted(list(set(list(y_test.unique()) + list(pd.Series(y_pred).unique()))))
+        cm = confusion_matrix(y_test, y_pred, labels=labels_for_cm)
+        np.savetxt(out_folder / 'confusion_matrix.csv', cm, delimiter=',', fmt='%d')
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(cm, annot=True, fmt='d', xticklabels=labels_for_cm, yticklabels=labels_for_cm, cmap='Blues')
+        plt.xlabel('predicted')
+        plt.ylabel('true')
+        plt.title('Confusion matrix')
+        plt.tight_layout()
+        plt.savefig(out_folder / 'confusion_matrix.png')
+        plt.close()
+    except Exception:
+        pass
+
     return metrics
 
 
 def main():
     inp = Path('data/cleaned.json')
+    #inp = Path('data/movies_data.json')
     df = load_input(inp)
     out_base = Path('artifacts') / f"experiments_{inp.stem}"
     out_folder = out_base / 'exp3_single_desc_rev'

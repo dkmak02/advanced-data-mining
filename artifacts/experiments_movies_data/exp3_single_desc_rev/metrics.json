@@ -1,0 +1,6 @@
+{
+  "n_train": 8029,
+  "n_test": 2008,
+  "strict_accuracy": 0.601593625498008,
+  "match_accuracy_any_match": 0.625996015936255
+}

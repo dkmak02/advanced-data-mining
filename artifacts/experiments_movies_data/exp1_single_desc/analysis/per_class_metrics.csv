@@ -1,0 +1,171 @@
+label,precision,recall,f1,support,TP,FP,FN,TN
+drama,0.0,0.0,0.0,1008,0,0,1008,1000
+comedy,0.0,0.0,0.0,666,0,0,666,1342
+thriller,0.0,0.0,0.0,426,0,0,426,1582
+crude humor and satire,0.0,0.0,0.0,412,0,0,412,1596
+moving relationship stories,0.0,0.0,0.0,369,0,0,369,1639
+romance,0.0,0.0,0.0,344,0,0,344,1664
+horror,0.0,0.0,0.0,339,0,0,339,1669
+and slapstick humor,0.0,0.0,0.0,306,0,0,306,1702
+jokes,0.0,0.0,0.0,306,0,0,306,1702
+gags,0.0,0.0,0.0,306,0,0,306,1702
+action,0.0,0.0,0.0,299,0,0,299,1709
+crime,0.0,0.0,0.0,291,0,0,291,1717
+adventure,0.0,0.0,0.0,266,0,0,266,1742
+the undead and monster classics,0.0,0.0,0.0,256,0,0,256,1752
+twisted dark psychological thriller,0.0,0.0,0.0,256,0,0,256,1752
+funny jokes and crude humor,0.0,0.0,0.0,255,0,0,255,1753
+humanity and the world around us,0.0,0.0,0.0,255,0,0,255,1753
+touching and sentimental family stories,0.0,0.0,0.0,236,0,0,236,1772
+laugh-out-loud relationship entanglements,0.0,0.0,0.0,236,0,0,236,1772
+powerful stories of heartbreak and suffering,0.0,0.0,0.0,231,0,0,231,1777
+fantasy,0.0,0.0,0.0,228,0,0,228,1780
+intense violence and sexual transgression,0.0,0.0,0.0,224,0,0,224,1784
+science fiction,0.0,0.0,0.0,217,0,0,217,1791
+and supernatural horror,0.0,0.0,0.0,212,0,0,212,1796
+haunted,0.0,0.0,0.0,212,0,0,212,1796
+terrifying,0.0,0.0,0.0,212,0,0,212,1796
+gory,0.0,0.0,0.0,207,0,0,207,1801
+and slasher horror,0.0,0.0,0.0,207,0,0,207,1801
+gruesome,0.0,0.0,0.0,207,0,0,207,1801
+epic heroes,0.0,0.0,0.0,187,0,0,187,1821
+amusing jokes and witty satire,0.0,0.0,0.0,187,0,0,187,1821
+relationship comedy,0.0,0.0,0.0,187,0,0,187,1821
+mystery,0.0,0.0,0.0,180,0,0,180,1828
+emotional and touching family dramas,0.0,0.0,0.0,177,0,0,177,1831
+quirky and endearing relationships,0.0,0.0,0.0,175,0,0,175,1833
+family,0.0,0.0,0.0,175,0,0,175,1833
+heartbreaking and moving family drama,0.0,0.0,0.0,169,0,0,169,1839
+superheroes in action-packed battles with villains,0.0,0.0,0.0,167,0,0,167,1841
+animation,0.0,0.0,0.0,166,0,0,166,1842
+chilling,0.0,0.0,0.0,150,0,0,150,1858
+and terrifying horror,0.0,0.0,0.0,150,0,0,150,1858
+creepy,0.0,0.0,0.0,150,0,0,150,1858
+gothic and eerie haunting horror,0.0,0.0,0.0,148,0,0,148,1860
+kids' animated fun and adventure,0.0,0.0,0.0,138,0,0,138,1870
+charming romances and delightful chemistry,0.0,0.0,0.0,134,0,0,134,1874
+surreal and thought-provoking visions of life and death,0.0,0.0,0.0,132,0,0,132,1876
+catchy songs and hilarious musical comedy,0.0,0.0,0.0,130,0,0,130,1878
+high speed and special ops,0.0,0.0,0.0,122,0,0,122,1886
+captivating relationships and charming romance,0.0,0.0,0.0,122,0,0,122,1886
+action comedy and silly heroics,0.0,0.0,0.0,120,0,0,120,1888
+passion and romance,0.0,0.0,0.0,117,0,0,117,1891
+suspenseful crime thrillers,0.0,0.0,0.0,117,0,0,117,1891
+explosive and action-packed heroes vs. villains,0.0,0.0,0.0,113,0,0,113,1895
+underdogs and coming of age,0.0,0.0,0.0,112,0,0,112,1896
+and surreal storytelling,0.0,0.0,0.0,110,0,0,110,1898
+history,0.0,0.0,0.0,110,0,0,110,1898
+quirky,0.0,0.0,0.0,110,0,0,110,1898
+dreamlike,0.0,0.0,0.0,110,0,0,110,1898
+thrillers and murder mysteries,0.0,0.0,0.0,109,0,0,109,1899
+challenging or sexual themes & twists,0.0,0.0,0.0,104,0,0,104,1904
+drugs and gangsters,0.0,0.0,0.0,99,0,0,99,1909
+emotional teen coming-of-age stories,0.0,0.0,0.0,99,0,0,99,1909
+teen school antics and laughter,0.0,0.0,0.0,93,0,0,93,1915
+enduring stories of family and marital drama,0.0,0.0,0.0,92,0,0,92,1916
+and crime,0.0,0.0,0.0,92,0,0,92,1916
+guns,0.0,0.0,0.0,92,0,0,92,1916
+violent action,0.0,0.0,0.0,92,0,0,92,1916
+intriguing and suspenseful murder mysteries,0.0,0.0,0.0,91,0,0,91,1917
+politics and human rights,0.0,0.0,0.0,90,0,0,90,1918
+monsters,0.0,0.0,0.0,87,0,0,87,1921
+sci-fi and the apocalypse,0.0,0.0,0.0,87,0,0,87,1921
+aliens,0.0,0.0,0.0,87,0,0,87,1921
+song and dance,0.0,0.0,0.0,86,0,0,86,1922
+emotional and captivating fantasy storytelling,0.0,0.0,0.0,86,0,0,86,1922
+music,0.0,0.0,0.0,84,0,0,84,1924
+adorable animals and heartwarming families,0.0,0.0,0.0,83,0,0,83,1925
+holiday joy and heartwarming christmas,0.0,0.0,0.0,83,0,0,83,1925
+powerful poetic and passionate drama,0.0,0.0,0.0,82,0,0,82,1926
+intense political and terrorist thrillers,0.0,0.0,0.0,82,0,0,82,1926
+thought-provoking sci-fi action and future technology,0.0,0.0,0.0,81,0,0,81,1927
+fantasy adventure,0.0,0.0,0.0,81,0,0,81,1927
+and swordplay,0.0,0.0,0.0,81,0,0,81,1927
+heroism,0.0,0.0,0.0,81,0,0,81,1927
+graphic violence and brutal revenge,0.0,0.0,0.0,79,0,0,79,1929
+noir and dark crime dramas,0.0,0.0,0.0,77,0,0,77,1931
+intense violent crime,0.0,0.0,0.0,74,0,0,74,1934
+gripping,0.0,0.0,0.0,74,0,0,74,1934
+sci-fi horror,0.0,0.0,0.0,73,0,0,73,1935
+creatures,0.0,0.0,0.0,73,0,0,73,1935
+and aliens,0.0,0.0,0.0,73,0,0,73,1935
+gritty crime and ruthless gangsters,0.0,0.0,0.0,69,0,0,69,1939
+heists and thrilling action,0.0,0.0,0.0,68,0,0,68,1940
+adrenaline-fueled action and fast cars,0.0,0.0,0.0,67,0,0,67,1941
+action-packed space and alien sagas,0.0,0.0,0.0,67,0,0,67,1941
+fairy-tale fantasy and enchanted magic,0.0,0.0,0.0,65,0,0,65,1943
+documentary,0.0,0.0,0.0,65,0,0,65,1943
+student coming-of-age challenges,0.0,0.0,0.0,62,0,0,62,1946
+dazzling vocal performances and musicals,0.0,0.0,0.0,62,0,0,62,1946
+erotic relationships and desire,0.0,0.0,0.0,61,0,0,61,1947
+spooky,0.0,0.0,0.0,60,0,0,60,1948
+scary comedy,0.0,0.0,0.0,60,0,0,60,1948
+violent crime and drugs,0.0,0.0,0.0,59,0,0,59,1949
+war and historical adventure,0.0,0.0,0.0,58,0,0,58,1950
+historical battles and epic heroism,0.0,0.0,0.0,57,0,0,57,1951
+war,0.0,0.0,0.0,54,0,0,54,1954
+epic history and literature,0.0,0.0,0.0,53,0,0,53,1955
+exciting spy thrillers with tense intrigue,0.0,0.0,0.0,48,0,0,48,1960
+emotional lgbtq relationships,0.0,0.0,0.0,48,0,0,48,1960
+intense combat and martial arts,0.0,0.0,0.0,47,0,0,47,1961
+faith and religion,0.0,0.0,0.0,47,0,0,47,1961
+military combat and heroic soldiers,0.0,0.0,0.0,46,0,0,46,1962
+racism and the powerful fight for justice,0.0,0.0,0.0,45,0,0,45,1963
+tragic sadness and captivating beauty,0.0,0.0,0.0,44,0,0,44,1964
+emotional life of renowned artists,0.0,0.0,0.0,44,0,0,44,1964
+imaginative space odysseys and alien encounters,0.0,0.0,0.0,43,0,0,43,1965
+riveting political and presidential drama,0.0,0.0,0.0,42,0,0,42,1966
+political drama,0.0,0.0,0.0,41,0,0,41,1967
+survival horror and zombie carnage,0.0,0.0,0.0,41,0,0,41,1967
+and war,0.0,0.0,0.0,41,0,0,41,1967
+patriotism,0.0,0.0,0.0,41,0,0,41,1967
+bloody vampire horror,0.0,0.0,0.0,40,0,0,40,1968
+emotional stories and documentaries,0.0,0.0,0.0,38,0,0,38,1970
+fascinating,0.0,0.0,0.0,38,0,0,38,1970
+and political documentaries,0.0,0.0,0.0,37,0,0,37,1971
+politics,0.0,0.0,0.0,37,0,0,37,1971
+propaganda,0.0,0.0,0.0,37,0,0,37,1971
+epic adventure and breathtaking battles,0.0,0.0,0.0,35,0,0,35,1973
+legendary musicians and stardom,0.0,0.0,0.0,33,0,0,33,1975
+violent prison drama,0.0,0.0,0.0,31,0,0,31,1977
+brutal,0.0,0.0,0.0,31,0,0,31,1977
+sin,0.0,0.0,0.0,30,0,0,30,1978
+dance rhythms and catchy tunes,0.0,0.0,0.0,30,0,0,30,1978
+and forgiveness,0.0,0.0,0.0,30,0,0,30,1978
+religious faith,0.0,0.0,0.0,30,0,0,30,1978
+western,0.0,0.0,0.0,28,0,0,28,1980
+tv movie,0.0,0.0,0.0,28,0,0,28,1980
+chilling experiments and classic monster horror,0.0,0.0,0.0,25,0,0,25,1983
+westerns,0.0,0.0,0.0,25,0,0,25,1983
+humanity's odyssey: earth and beyond,0.0,0.0,0.0,24,0,0,24,1984
+inspiring sports underdog stories,0.0,0.0,0.0,24,0,0,24,1984
+dangerous technology and the apocalypse,0.0,0.0,0.0,24,0,0,24,1984
+faith and spiritual journeys,0.0,0.0,0.0,21,0,0,21,1987
+captivating vision and shakespearean drama,0.0,0.0,0.0,21,0,0,21,1987
+bravery in war,0.0,0.0,0.0,20,0,0,20,1988
+bollywood emotional dramas,0.0,0.0,0.0,19,0,0,19,1989
+nazis and world war ii,0.0,0.0,0.0,19,0,0,19,1989
+wild west outlaws and gunfights,0.0,0.0,0.0,18,0,0,18,1990
+sci-fi monster and dinosaur adventures,0.0,0.0,0.0,18,0,0,18,1990
+lavish dramas and sumptuous royalty,0.0,0.0,0.0,17,0,0,17,1991
+western frontier dramas with a touch of humor,0.0,0.0,0.0,16,0,0,16,1992
+underdog fighting and boxing stories,0.0,0.0,0.0,14,0,0,14,1994
+disastrous voyages and heroic survival,0.0,0.0,0.0,14,0,0,14,1994
+extreme gory horror and cannibalism,0.0,0.0,0.0,13,0,0,13,1995
+air pilot heroism and survival,0.0,0.0,0.0,9,0,0,9,1999
+teen friendship and coming-of-age,0.0,0.0,0.0,8,0,0,8,2000
+engaging,0.0,0.0,0.0,6,0,0,6,2002
+intense crime and casino drama,0.0,0.0,0.0,6,0,0,6,2002
+a,0.0,0.0,0.0,0,0,1625,0,383
+d,0.0,0.0,0.0,0,0,1876,0,132
+c,0.0,0.0,0.0,0,0,265,0,1743
+h,0.0,0.0,0.0,0,0,125,0,1883
+e,0.0,0.0,0.0,0,0,280,0,1728
+l,0.0,0.0,0.0,0,0,22,0,1986
+i,0.0,0.0,0.0,0,0,29,0,1979
+n,0.0,0.0,0.0,0,0,7,0,2001
+o,0.0,0.0,0.0,0,0,368,0,1640
+r,0.0,0.0,0.0,0,0,1743,0,265
+m,0.0,0.0,0.0,0,0,1876,0,132
+t,0.0,0.0,0.0,0,0,29,0,1979
+y,0.0,0.0,0.0,0,0,258,0,1750

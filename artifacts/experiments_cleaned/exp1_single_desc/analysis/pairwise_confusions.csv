@@ -1,0 +1,210 @@
+true,pred,count
+drama,a,1916
+drama,d,997
+drama,m,997
+drama,r,989
+comedy,a,962
+horror,r,804
+horror,a,772
+thriller,a,738
+crime,a,670
+comedy,d,633
+comedy,m,633
+romance,a,616
+comedy,r,522
+thriller,r,512
+action,a,470
+horror,d,431
+horror,m,431
+thriller,d,394
+thriller,m,394
+crime,r,385
+crime,d,362
+crime,m,362
+adventure,a,358
+romance,d,347
+romance,m,347
+fantasy,a,337
+horror,o,317
+action,r,316
+romance,r,308
+science fiction,a,303
+mystery,a,296
+action,d,268
+action,m,268
+adventure,d,237
+adventure,m,237
+mystery,r,234
+fantasy,d,217
+fantasy,m,217
+science fiction,r,212
+history,a,212
+fantasy,r,206
+adventure,r,205
+animation,a,197
+family,a,189
+science fiction,d,183
+science fiction,m,183
+family,d,175
+family,m,175
+comedy,o,174
+mystery,d,160
+mystery,m,160
+music,a,160
+comedy,e,156
+comedy,c,152
+comedy,y,152
+animation,d,151
+animation,m,151
+horror,h,141
+animation,r,116
+documentary,a,115
+history,d,110
+history,m,110
+history,r,106
+thriller,o,103
+family,r,100
+music,d,94
+music,m,94
+war,a,94
+family,o,86
+music,r,83
+action,o,83
+adventure,o,82
+family,c,82
+family,e,81
+family,y,81
+fantasy,o,79
+science fiction,o,78
+adventure,c,70
+adventure,e,68
+mystery,o,68
+animation,o,66
+documentary,d,63
+documentary,m,63
+adventure,y,62
+documentary,r,61
+drama,o,57
+animation,c,54
+fantasy,c,53
+animation,e,53
+animation,y,53
+thriller,h,52
+action,e,51
+war,d,50
+war,m,50
+fantasy,e,50
+fantasy,y,50
+western,a,50
+horror,e,50
+tv movie,a,48
+war,r,47
+crime,o,47
+action,c,45
+horror,c,45
+horror,y,45
+science fiction,c,42
+drama,e,41
+science fiction,e,40
+romance,c,39
+romance,o,39
+romance,e,39
+romance,y,39
+drama,c,39
+drama,y,39
+thriller,e,38
+action,y,37
+crime,e,37
+tv movie,d,35
+tv movie,m,35
+science fiction,y,35
+action,h,33
+tv movie,r,30
+mystery,h,29
+action,l,28
+western,d,28
+western,m,28
+crime,c,27
+crime,y,27
+thriller,l,26
+western,r,25
+thriller,c,25
+thriller,y,25
+science fiction,h,23
+action,t,22
+action,i,22
+crime,h,20
+crime,l,20
+music,o,16
+comedy,h,15
+tv movie,o,15
+adventure,t,14
+adventure,i,14
+music,c,14
+music,e,14
+music,y,14
+fantasy,h,13
+mystery,e,13
+thriller,t,13
+thriller,i,13
+science fiction,t,12
+science fiction,i,12
+adventure,h,12
+adventure,l,12
+mystery,c,12
+mystery,y,12
+tv movie,c,11
+tv movie,e,11
+tv movie,y,11
+drama,h,11
+science fiction,l,10
+crime,t,10
+crime,i,10
+horror,l,10
+comedy,l,8
+adventure,n,8
+documentary,o,8
+action,n,8
+science fiction,n,7
+animation,h,6
+documentary,c,6
+documentary,e,6
+documentary,y,6
+horror,t,5
+horror,i,5
+comedy,t,4
+comedy,i,4
+history,c,4
+history,o,4
+history,e,4
+history,y,4
+drama,l,4
+western,c,3
+western,o,3
+western,e,3
+western,y,3
+fantasy,t,3
+fantasy,i,3
+fantasy,n,3
+war,c,3
+war,o,3
+war,e,3
+war,y,3
+family,h,2
+tv movie,h,2
+mystery,l,2
+drama,t,2
+drama,i,2
+family,t,1
+family,i,1
+family,n,1
+documentary,u,1
+documentary,n,1
+documentary,t,1
+documentary,h,1
+music,h,1
+mystery,t,1
+mystery,i,1
+animation,t,1
+animation,i,1
+animation,n,1

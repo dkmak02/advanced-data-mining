@@ -5,11 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="23909d64-3dd0-4280-b2bb-be866f842f5d" name="Changes" comment="push scapred data">
-      <change afterPath="$PROJECT_DIR$/clean-genres.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/advanced-data-mining.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/advanced-data-mining.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/models.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/movies_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/data/movies_data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp1_single_desc/metrics.json" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp1_single_desc/metrics.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp1_single_desc/single_label_pipeline.joblib" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp1_single_desc/single_label_pipeline.joblib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp2_multi_desc/multilabel_pipeline.joblib" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp2_multi_desc/multilabel_pipeline.joblib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp3_single_desc_rev/metrics.json" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp3_single_desc_rev/metrics.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp3_single_desc_rev/single_label_pipeline.joblib" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp3_single_desc_rev/single_label_pipeline.joblib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp4_multi_desc_rev/multilabel_pipeline.joblib" beforeDir="false" afterPath="$PROJECT_DIR$/artifacts/experiments_cleaned/exp4_multi_desc_rev/multilabel_pipeline.joblib" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_multi_desc.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_multi_desc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_multi_desc_rev.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_multi_desc_rev.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_single_desc.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_single_desc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_single_desc_rev.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_single_desc_rev.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +28,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="Jupyter Notebook" />
       </list>
     </option>
   </component>
@@ -115,6 +124,8 @@
       <workItem from="1762773450185" duration="379000" />
       <workItem from="1762773850634" duration="248000" />
       <workItem from="1762774107853" duration="1117000" />
+      <workItem from="1763886257201" duration="6507000" />
+      <workItem from="1763894677387" duration="645000" />
     </task>
     <task id="LOCAL-00001" summary="basic script to get movies url from letterbox">
       <option name="closed" value="true" />
