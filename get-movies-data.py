@@ -64,7 +64,7 @@ async def worker(semaphore, browser, title, url, results, is_last=False):
             movie = await fetch_movie_data(browser, title, url)
             await save_movie(movie, is_last=is_last)
         except Exception as e:
-            print(f"❌ Error scraping {url}: {e}")
+            print(f"Error scraping {url}: {e}")
 
 # --- Main ---
 async def main():

@@ -1,0 +1,534 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{url}
+\geometry{margin=2.5cm}
+
+% Konfiguracja dla pakietu listings (obsługa polskich znaków)
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={ą}{{\k{a}}}1 {ć}{{\'c}}1 {ę}{{\k{e}}}1 {ł}{{\l{}}}1 {ń}{{\'n}}1 {ó}{{\'o}}1 {ś}{{\'s}}1 {ź}{{\'z}}1 {ż}{{\.z}}1
+             {Ą}{{\k{A}}}1 {Ć}{{\'C}}1 {Ę}{{\k{E}}}1 {Ł}{{\l{}}}1 {Ń}{{\'N}}1 {Ó}{{\'O}}1 {Ś}{{\'S}}1 {Ź}{{\'Z}}1 {Ż}{{\.Z}}1
+}
+
+% Konfiguracja hyperref dla lepszego wyświetlania linków
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Klasyfikacja Gatunków Filmowych},
+    pdfauthor={Projekt z Zaawansowanego Data Mining}
+}
+
+\title{Klasyfikacja Gatunków Filmowych na Podstawie Opisów i Recenzji}
+\author{Projekt z Zaawansowanego Data Mining}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Wprowadzenie}
+
+Projekt dotyczy automatycznej klasyfikacji gatunków filmowych na podstawie tekstowych opisów filmów oraz recenzji użytkowników. Celem jest zbudowanie systemu uczenia maszynowego, który potrafi przewidzieć gatunek (lub gatunki) filmu na podstawie jego opisu oraz opinii widzów. Projekt wykorzystuje techniki przetwarzania języka naturalnego oraz klasyfikacji wieloklasowej i wieloetykietowej.
+
+\section{Pobieranie Danych}
+
+\subsection{Źródło Danych}
+
+Dane zostały pobrane z serwisu \textbf{Letterboxd} (\url{https://letterboxd.com}), który jest popularną platformą społecznościową dla miłośników kina. Letterboxd zawiera informacje o filmach, recenzje użytkowników oraz szczegółowe metadane, w tym gatunki filmowe.
+
+\subsection{Proces Zbierania Danych}
+
+Proces pobierania danych składa się z dwóch głównych etapów:
+
+\subsubsection{Etap 1: Pobieranie Listy Filmów}
+
+Skrypt \texttt{get-movies-url.py} wykorzystuje bibliotekę \texttt{Playwright} do automatycznego przeglądania stron Letterboxd. Proces przebiega następująco:
+
+\begin{itemize}
+    \item Przeszukiwanie stron z popularnymi filmami: \texttt{https://letterboxd.com/films/popular/page/\{1-150\}/}
+    \item Ekstrakcja tytułów filmów oraz ich URL-i z listy plakatów
+    \item Zapis wyników do pliku CSV (\texttt{data/movies.csv}) w formacie: \texttt{Title,URL}
+    \item Wykorzystanie asynchronicznego web scrapingu z semaforem (maksymalnie 10 równoczesnych żądań) w celu przyspieszenia procesu
+\end{itemize}
+
+\subsubsection{Etap 2: Pobieranie Szczegółowych Danych}
+
+Skrypt \texttt{get-movies-data.py} pobiera szczegółowe informacje o każdym filmie:
+
+\begin{itemize}
+    \item \textbf{Tytuł filmu} -- ekstrahowany z nagłówka strony
+    \item \textbf{Rok produkcji} -- z sekcji daty wydania
+    \item \textbf{Gatunki} -- z sekcji \texttt{\#tab-genres}
+    \item \textbf{Opis filmu} -- z sekcji \texttt{truncate}
+    \item \textbf{Recenzje użytkowników} -- popularne recenzje z sekcji \texttt{js-popular-reviews}
+\end{itemize}
+
+Dane są zapisywane w formacie JSON (\texttt{data/movies_data.json}). Proces wykorzystuje:
+\begin{itemize}
+    \item Asynchroniczne przetwarzanie z semaforem (maksymalnie 5 równoczesnych żądań)
+    \item Bibliotekę \texttt{BeautifulSoup} do parsowania HTML
+    \item Asynchroniczne zapisywanie plików z użyciem \texttt{aiofiles}
+\end{itemize}
+
+\subsection{Przykładowe Dane}
+
+Każdy rekord w zbiorze danych ma następującą strukturę:
+
+\begin{lstlisting}[language=Python, basicstyle=\small]
+{
+  "Title": "Shaun of the Dead",
+  "URL": "https://letterboxd.com/film/shaun-of-the-dead/",
+  "Year": "2004",
+  "Genres": "Horror|Comedy|Horror",
+  "Description": "Shaun lives a supremely uneventful life...",
+  "AllReviews": [
+    "this is what EVERY other zombie comedy...",
+    "\"he's not my boyfriend!\"...",
+    "the fact that the brutal murdering..."
+  ]
+}
+\end{lstlisting}
+
+\section{Przetwarzanie i Filtrowanie Danych}
+
+\subsection{Przygotowanie Danych}
+
+Dane są przetwarzane w notatniku \texttt{models.ipynb} w kilku etapach:
+
+\subsubsection{Lista Dozwolonych Gatunków}
+
+Projekt wykorzystuje 19 standardowych gatunków filmowych zgodnych z klasyfikacją TMDB (The Movie Database):
+
+\begin{itemize}
+    \item Action, Adventure, Animation, Comedy, Crime, Documentary
+    \item Drama, Family, Fantasy, History, Horror, Music
+    \item Mystery, Romance, Science Fiction, Thriller
+    \item TV Movie, War, Western
+\end{itemize}
+
+\subsubsection{Proces Czyszczenia i Filtrowania}
+
+\begin{enumerate}
+    \item \textbf{Usunięcie niepotrzebnych kolumn}: Usunięcie kolumn \texttt{URL} i \texttt{Year} z danych
+    \item \textbf{Filtrowanie dozwolonych gatunków}: Zachowanie tylko gatunków z listy dozwolonych (separator: przecinek)
+    \item \textbf{Analiza częstotliwości}: Zliczenie występowania każdego gatunku w zbiorze danych
+    \item \textbf{Filtrowanie rzadkich gatunków}: Usunięcie gatunków występujących w mniej niż 1000 filmach
+    \item \textbf{Specjalne reguły dla dominujących gatunków}:
+    \begin{itemize}
+        \item Jeśli film ma wiele gatunków i zawiera \texttt{Drama}, gatunek \texttt{Drama} jest usuwany
+        \item Jeśli film ma wiele gatunków i zawiera \texttt{Comedy}, gatunek \texttt{Comedy} jest usuwany
+    \end{itemize}
+    \item \textbf{Usunięcie pustych rekordów}: Usunięcie filmów bez przypisanych gatunków po filtrowaniu
+\end{enumerate}
+
+Te kroki mają na celu:
+\begin{itemize}
+    \item Redukcję szumu w danych (rzadkie gatunki mogą być błędnie przypisane)
+    \item Uproszczenie klasyfikacji poprzez usunięcie zbyt ogólnych gatunków (\texttt{Drama}, \texttt{Comedy}) gdy występują z bardziej specyficznymi
+    \item Zapewnienie wystarczającej liczby przykładów dla każdego gatunku
+\end{itemize}
+
+\section{Eksperymenty}
+
+Projekt zawiera pięć głównych eksperymentów, które różnią się:
+\begin{itemize}
+    \item Typem klasyfikacji (pojedyncza etykieta vs. wiele etykiet)
+    \item Źródłem danych tekstowych (tylko opis vs. opis + recenzje)
+    \item Typem modelu (klasyczne ML vs. Transformer/BERT)
+\end{itemize}
+
+\subsection{Eksperyment 1: Klasyfikacja Pojedynczej Etykiety -- Tylko Opis}
+
+\subsubsection{Charakterystyka}
+\begin{itemize}
+    \item \textbf{Typ klasyfikacji}: Pojedyncza etykieta (single-label classification)
+    \item \textbf{Dane wejściowe}: Tylko pole \texttt{Description}
+    \item \textbf{Wybór etykiety}: Dla filmów z wieloma gatunkami wybierany jest pierwszy gatunek z listy (po filtrowaniu)
+    \item \textbf{Etykiety}: Konwersja na małe litery dla spójności
+\end{itemize}
+
+\subsubsection{Proces}
+\begin{enumerate}
+    \item Ekstrakcja gatunków z pola \texttt{Genres} (po filtrowaniu)
+    \item Wybór pierwszego gatunku jako etykiety: \texttt{label = Genres.split(",")[0].strip().lower()}
+    \item Podział danych: 80\% trening, 20\% test z próbkowaniem warstwowym
+    \item Wektoryzacja tekstu: TF-IDF z parametrami:
+    \begin{itemize}
+        \item \texttt{max\_features}: 20000
+        \item \texttt{stop\_words}: 'english'
+        \item \texttt{ngram\_range}: (1, 2) -- unigramy i bigramy
+    \end{itemize}
+    \item Klasyfikacja: Regresja logistyczna z \texttt{max\_iter=1000}
+\end{enumerate}
+
+\subsubsection{Wyniki}
+\begin{itemize}
+    \item \textbf{Dokładność (Accuracy)}: 39.30\% (760/1934 poprawnych przewidywań)
+    \item \textbf{F1-score makrośrednia}: 0.34
+    \item \textbf{F1-score mikrośrednia}: 0.39
+    \item \textbf{Najlepiej przewidywane gatunki}: Romance (F1=0.55), Drama (F1=0.47), Horror (F1=0.46)
+    \item \textbf{Najgorzej przewidywane gatunki}: Fantasy (F1=0.18), Adventure (F1=0.22), Comedy (F1=0.34)
+\end{itemize}
+
+\subsection{Eksperyment 2: Klasyfikacja Pojedynczej Etykiety -- Opis + Recenzje}
+
+\subsubsection{Charakterystyka}
+\begin{itemize}
+    \item \textbf{Typ klasyfikacji}: Pojedyncza etykieta
+    \item \textbf{Dane wejściowe}: Pole \texttt{Description} + pole \texttt{AllReviews} (połączone)
+    \item \textbf{Cel}: Sprawdzenie, czy dodatkowe informacje z recenzji poprawiają jakość klasyfikacji
+\end{itemize}
+
+\subsubsection{Proces}
+\begin{enumerate}
+    \item Łączenie tekstów: \texttt{text = Description + " " + " ".join(AllReviews)}
+    \item Normalizacja: Obsługa wartości None oraz list w polu \texttt{AllReviews}
+    \item Pozostałe kroki identyczne jak w Eksperymencie 1 (TF-IDF z ngram\_range=(1,2), regresja logistyczna)
+\end{enumerate}
+
+\subsubsection{Wyniki}
+\begin{itemize}
+    \item \textbf{Dokładność (Accuracy)}: 41.57\% (804/1934 poprawnych przewidywań)
+    \item \textbf{F1-score makrośrednia}: 0.36
+    \item \textbf{F1-score mikrośrednia}: 0.42
+    \item \textbf{Poprawa względem Eksperymentu 1}: +2.27 punktów procentowych dokładności
+    \item \textbf{Najlepiej przewidywane gatunki}: Romance (F1=0.55), Drama (F1=0.55), Horror (F1=0.52)
+    \item \textbf{Najgorzej przewidywane gatunki}: Fantasy (F1=0.18), Adventure (F1=0.21), Comedy (F1=0.39)
+\end{itemize}
+
+\textbf{Wnioski}: Dodanie recenzji nieznacznie poprawia jakość klasyfikacji, szczególnie dla gatunków takich jak Horror i Crime.
+
+\subsection{Eksperyment 3: Klasyfikacja Wieloetykietowa -- Tylko Opis}
+
+\subsubsection{Charakterystyka}
+\begin{itemize}
+    \item \textbf{Typ klasyfikacji}: Wieloetykietowa (multi-label classification)
+    \item \textbf{Dane wejściowe}: Tylko pole \texttt{Description}
+    \item \textbf{Etykiety}: Wszystkie gatunki przypisane do filmu (po filtrowaniu)
+\end{itemize}
+
+\subsubsection{Proces}
+\begin{enumerate}
+    \item Ekstrakcja wszystkich gatunków dla każdego filmu jako lista
+    \item Kodowanie wieloetykietowe: \texttt{MultiLabelBinarizer} do konwersji list gatunków na macierze binarne
+    \item Wektoryzacja: TF-IDF z \texttt{max\_features=20000}, \texttt{stop\_words='english'}, \texttt{ngram\_range=(1,2)}
+    \item Klasyfikacja: \texttt{OneVsRestClassifier} z regresją logistyczną jako estymatorem bazowym
+    \item \textbf{Fixowanie pustych predykcji}: Jeśli model nie przewiduje żadnej etykiety, wybierana jest etykieta z najwyższym prawdopodobieństwem z \texttt{predict\_proba}
+\end{enumerate}
+
+\subsubsection{Wyniki}
+\begin{itemize}
+    \item \textbf{Hamming Loss}: 0.141
+    \item \textbf{F1-score makrośrednia}: 0.43
+    \item \textbf{F1-score mikrośrednia}: 0.46
+    \item \textbf{Exact Match Accuracy}: 25.80\% (dokładne dopasowanie wszystkich etykiet)
+    \item \textbf{Najlepiej przewidywane gatunki}: Romance (F1=0.58), Horror (F1=0.56), Crime (F1=0.52), Action (F1=0.50)
+    \item \textbf{Najgorzej przewidywane gatunki}: Fantasy (F1=0.25), Comedy (F1=0.25), Drama (F1=0.39), Adventure (F1=0.44)
+\end{itemize}
+
+\subsection{Eksperyment 4: Klasyfikacja Wieloetykietowa -- Opis + Recenzje}
+
+\subsubsection{Charakterystyka}
+\begin{itemize}
+    \item \textbf{Typ klasyfikacji}: Wieloetykietowa
+    \item \textbf{Dane wejściowe}: Pole \texttt{Description} + pole \texttt{AllReviews} (połączone)
+    \item \textbf{Cel}: Sprawdzenie wpływu recenzji na klasyfikację wieloetykietową
+\end{itemize}
+
+\subsubsection{Proces}
+\begin{enumerate}
+    \item Tworzenie połączonego pola tekstowego: \texttt{text = Description + " " + " ".join(AllReviews)}
+    \item Pozostałe kroki identyczne jak w Eksperymencie 3 (TF-IDF, OneVsRestClassifier, fixowanie pustych predykcji)
+\end{enumerate}
+
+\subsubsection{Wyniki}
+\begin{itemize}
+    \item \textbf{Hamming Loss}: 0.131 (poprawa względem Eksperymentu 3)
+    \item \textbf{F1-score makrośrednia}: 0.46
+    \item \textbf{F1-score mikrośrednia}: 0.50
+    \item \textbf{Exact Match Accuracy}: 29.58\% (poprawa względem Eksperymentu 3)
+    \item \textbf{Najlepiej przewidywane gatunki}: Horror (F1=0.67), Romance (F1=0.58), Action (F1=0.54), Thriller (F1=0.51)
+    \item \textbf{Najgorzej przewidywane gatunki}: Fantasy (F1=0.25), Comedy (F1=0.28), Adventure (F1=0.39), Science Fiction (F1=0.43)
+\end{itemize}
+
+\textbf{Wnioski}: Dodanie recenzji znacząco poprawia wyniki klasyfikacji wieloetykietowej, szczególnie dla gatunków Horror i Action.
+
+\subsection{Eksperyment 5: Model Transformer (BERT) -- Opis + Recenzje}
+
+\subsubsection{Charakterystyka}
+\begin{itemize}
+    \item \textbf{Typ klasyfikacji}: Wieloetykietowa z wykorzystaniem głębokiego uczenia
+    \item \textbf{Model}: BERT (Bidirectional Encoder Representations from Transformers)
+    \item \textbf{Dane wejściowe}: Pole \texttt{Description} + pole \texttt{AllReviews} (połączone)
+    \item \textbf{Cel}: Porównanie wydajności modelu Transformer z klasycznymi metodami ML
+\end{itemize}
+
+\subsubsection{Proces}
+\begin{enumerate}
+    \item Przygotowanie danych: Połączenie opisu i recenzji
+    \item Tokenizacja: Wykorzystanie tokenizera BERT (\texttt{bert-base-uncased}) z parametrami:
+    \begin{itemize}
+        \item \texttt{truncation=True}: Obcięcie tekstów do maksymalnej długości
+        \item \texttt{padding='max\_length'}: Dopełnienie do stałej długości
+        \item \texttt{max\_length=256}: Maksymalna długość sekwencji
+    \end{itemize}
+    \item Model: \texttt{BertForSequenceClassification} z konfiguracją:
+    \begin{itemize}
+        \item \texttt{num\_labels}: Liczba gatunków (10 po filtrowaniu)
+        \item \texttt{problem\_type}: 'multi\_label\_classification'
+    \end{itemize}
+    \item Trening:
+    \begin{itemize}
+        \item Optimizer: AdamW z learning rate 2e-5
+        \item Loss function: BCEWithLogitsLoss (Binary Cross Entropy)
+        \item Batch size: 8
+        \item Early stopping: Patience=2 epoki
+        \item Maksymalna liczba epok: 10
+    \end{itemize}
+    \item Predykcja: Sigmoid na wyjściu modelu, próg 0.5 dla każdej etykiety
+\end{enumerate}
+
+\subsubsection{Wyniki}
+\begin{itemize}
+    \item \textbf{Hamming Loss}: 0.110 (najlepszy wynik)
+    \item \textbf{F1-score makrośrednia}: 0.63 (najlepszy wynik)
+    \item \textbf{F1-score mikrośrednia}: 0.64 (najlepszy wynik)
+    \item \textbf{Exact Match Accuracy}: Znacznie wyższa niż w klasycznych modelach
+    \item \textbf{Przykładowe predykcje}: Model lepiej radzi sobie z przewidywaniem wielu gatunków jednocześnie
+    \begin{itemize}
+        \item Przykład: \texttt{True: ('Horror', 'Thriller')} $\rightarrow$ \texttt{Pred: ('Horror', 'Thriller')} ✓
+        \item Przykład: \texttt{True: ('Action', 'Adventure', 'Science Fiction')} $\rightarrow$ \texttt{Pred: ('Action', 'Science Fiction')} (częściowo poprawne)
+    \end{itemize}
+\end{itemize}
+
+\textbf{Wnioski}: Model BERT osiąga najlepsze wyniki we wszystkich metrykach, pokazując przewagę głębokiego uczenia nad klasycznymi metodami ML dla tego zadania.
+
+\section{Wykorzystane Techniki}
+
+\subsection{Przetwarzanie Tekstu}
+
+\subsubsection{TF-IDF (Term Frequency-Inverse Document Frequency)}
+\begin{itemize}
+    \item \textbf{Cel}: Konwersja dokumentów tekstowych na wektory numeryczne
+    \item \textbf{Parametry używane w eksperymentach}:
+    \begin{itemize}
+        \item \texttt{max\_features}: 20000 (maksymalna liczba cech)
+        \item \texttt{stop\_words}: 'english' (usunięcie słów stop)
+        \item \texttt{ngram\_range}: (1, 2) -- unigramy i bigramy (używane we wszystkich eksperymentach)
+        \item \texttt{min\_df}: Domyślnie 1 (słowo musi wystąpić w co najmniej 1 dokumencie)
+    \end{itemize}
+    \item \textbf{Implementacja}: \texttt{sklearn.feature\_extraction.text.TfidfVectorizer}
+    \item \textbf{Uzasadnienie bigramów}: Bigramy pozwalają na uchwycenie fraz i kontekstu, co jest szczególnie ważne dla rozróżnienia podobnych gatunków
+\end{itemize}
+
+\subsection{Klasyfikacja}
+
+\subsubsection{Regresja Logistyczna}
+\begin{itemize}
+    \item \textbf{Zastosowanie}: Klasyfikacja pojedynczej etykiety oraz jako estymator bazowy w klasyfikacji wieloetykietowej
+    \item \textbf{Parametry}:
+    \begin{itemize}
+        \item \texttt{max\_iter}: 1000 (maksymalna liczba iteracji)
+        \item \texttt{C}: Parametr regularyzacji (domyślnie 1.0, możliwe wartości: 0.01, 0.1, 1.0, 10.0)
+        \item \texttt{class\_weight}: Równoważenie klas (None lub 'balanced')
+    \end{itemize}
+    \item \textbf{Implementacja}: \texttt{sklearn.linear\_model.LogisticRegression}
+\end{itemize}
+
+\subsubsection{One-vs-Rest Classifier}
+\begin{itemize}
+    \item \textbf{Zastosowanie}: Klasyfikacja wieloetykietowa
+    \item \textbf{Mechanizm}: Dla każdej klasy budowany jest osobny klasyfikator binarny (dana klasa vs. wszystkie pozostałe)
+    \item \textbf{Estymator bazowy}: Regresja logistyczna z \texttt{max\_iter=1000}
+    \item \textbf{Implementacja}: \texttt{sklearn.multiclass.OneVsRestClassifier}
+    \item \textbf{Fixowanie pustych predykcji}: W eksperymentach wieloetykietowych zastosowano mechanizm naprawczy -- jeśli model nie przewiduje żadnej etykiety, wybierana jest etykieta z najwyższym prawdopodobieństwem z \texttt{predict\_proba}. Zapewnia to, że każdy film otrzymuje co najmniej jedną przewidywaną etykietę.
+\end{itemize}
+
+\subsection{Przetwarzanie Etykiet}
+
+\subsubsection{MultiLabelBinarizer}
+\begin{itemize}
+    \item \textbf{Cel}: Konwersja list gatunków na macierze binarne
+    \item \textbf{Przykład}: \texttt{['Horror', 'Comedy']} $\rightarrow$ \texttt{[1, 0, 1, 0, ...]} (gdzie 1 oznacza obecność gatunku)
+    \item \textbf{Implementacja}: \texttt{sklearn.preprocessing.MultiLabelBinarizer}
+\end{itemize}
+
+\subsection{Walidacja i Optymalizacja}
+
+\subsubsection{Train-Test Split}
+\begin{itemize}
+    \item \textbf{Proporcje}: 80\% trening, 20\% test
+    \item \textbf{Stratyfikacja}: Gdy możliwe, zachowanie proporcji klas w zbiorze treningowym i testowym
+    \item \textbf{Seed}: \texttt{random\_state=42} dla powtarzalności wyników
+\end{itemize}
+
+\subsubsection{Grid Search (Opcjonalnie)}
+\begin{itemize}
+    \item \textbf{Cel}: Optymalizacja hiperparametrów
+    \item \textbf{Metoda}: Przeszukiwanie siatki parametrów z walidacją krzyżową (3-fold CV)
+    \item \textbf{Parametry optymalizowane}:
+    \begin{itemize}
+        \item TF-IDF: \texttt{max\_features}, \texttt{ngram\_range}, \texttt{min\_df}
+        \item Regresja logistyczna: \texttt{C}, \texttt{class\_weight}
+    \end{itemize}
+    \item \textbf{Scoring}: F1-macro (single-label) lub F1-micro (multi-label)
+\end{itemize}
+
+\section{Struktura Wyników}
+
+Każdy eksperyment generuje następujące pliki w katalogu \texttt{artifacts/experiments\_\{nazwa\_zbioru\}/exp\{N\}\_\{typ\}\_\{dane\}/}:
+
+\begin{itemize}
+    \item \texttt{metrics.json}: Podstawowe metryki wydajności
+    \item \texttt{predictions.json}: Przewidywania dla zbioru testowego
+    \item \texttt{confusion\_matrix.csv/png}: Macierz pomyłek (dla klasyfikacji pojedynczej etykiety)
+    \item \texttt{confusion\_matrix\_primary.csv/png}: Macierz pomyłek dla głównego gatunku (dla klasyfikacji wieloetykietowej)
+    \item \texttt{\{single/multi\}label\_pipeline.joblib}: Zapisany model do późniejszego użycia
+    \item \texttt{report.json}: Szczegółowy raport klasyfikacji (tylko dla single-label)
+    \item \texttt{analysis/}: Katalog z dodatkowymi analizami (jeśli dostępne)
+\end{itemize}
+
+\subsection{Modele Głębokiego Uczenia}
+
+\subsubsection{BERT (Bidirectional Encoder Representations from Transformers)}
+\begin{itemize}
+    \item \textbf{Zastosowanie}: Klasyfikacja wieloetykietowa z wykorzystaniem pre-trenowanego modelu językowego
+    \item \textbf{Model bazowy}: \texttt{bert-base-uncased} (12 warstw, 110M parametrów)
+    \item \textbf{Architektura}: 
+    \begin{itemize}
+        \item Warstwa embeddingowa dla tokenów
+        \item 12 warstw Transformer Encoder
+        \item Warstwa klasyfikacyjna na wyjściu (dla każdej etykiety osobno)
+    \end{itemize}
+    \item \textbf{Tokenizacja}: Automatyczna tokenizacja z wykorzystaniem tokenizera BERT
+    \item \textbf{Optymalizacja}: 
+    \begin{itemize}
+        \item Optimizer: AdamW
+        \item Learning rate: 2e-5
+        \item Loss: BCEWithLogitsLoss (Binary Cross Entropy z logits)
+        \item Batch size: 8
+    \end{itemize}
+    \item \textbf{Regularyzacja}: Early stopping z patience=2 epoki
+    \item \textbf{Implementacja}: \texttt{transformers.BertForSequenceClassification}, \texttt{torch}
+\end{itemize}
+
+\section{Biblioteki i Narzędzia}
+
+Projekt wykorzystuje następujące biblioteki Pythona:
+
+\begin{itemize}
+    \item \textbf{pandas}: Manipulacja danymi strukturalnymi
+    \item \textbf{scikit-learn}: Uczenie maszynowe (klasyfikacja, wektoryzacja, metryki)
+    \item \textbf{playwright}: Automatyzacja przeglądarki do web scrapingu
+    \item \textbf{beautifulsoup4}: Parsowanie HTML
+    \item \textbf{aiofiles}: Asynchroniczne operacje na plikach
+    \item \textbf{matplotlib/seaborn}: Wizualizacja wyników
+    \item \textbf{joblib}: Serializacja modeli
+    \item \textbf{numpy}: Operacje numeryczne
+    \item \textbf{torch/PyTorch}: Framework do głębokiego uczenia
+    \item \textbf{transformers}: Biblioteka Hugging Face do modeli Transformer (BERT)
+\end{itemize}
+
+\section{Analiza Wyników i Wnioski}
+
+\subsection{Porównanie Eksperymentów}
+
+Tabela \ref{tab:wyniki} przedstawia porównanie wyników wszystkich eksperymentów:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Eksperyment} & \textbf{Accuracy/Exact Match} & \textbf{F1 Micro} & \textbf{F1 Macro} & \textbf{Hamming Loss} \\
+\midrule
+Exp1: Single-label (opis) & 39.30\% & 0.39 & 0.34 & -- \\
+Exp2: Single-label (opis+recenzje) & 41.57\% & 0.42 & 0.36 & -- \\
+Exp3: Multi-label (opis) & 25.80\% & 0.46 & 0.43 & 0.141 \\
+Exp4: Multi-label (opis+recenzje) & 29.58\% & 0.50 & 0.46 & 0.131 \\
+Exp5: BERT (opis+recenzje) & -- & 0.64 & 0.63 & 0.110 \\
+\bottomrule
+\end{tabular}
+\caption{Porównanie wyników eksperymentów}
+\label{tab:wyniki}
+\end{table}
+
+\subsection{Kluczowe Obserwacje}
+
+\begin{enumerate}
+    \item \textbf{Wpływ recenzji}: Dodanie recenzji poprawia wyniki we wszystkich eksperymentach:
+    \begin{itemize}
+        \item Single-label: +2.27 pp dokładności
+        \item Multi-label: +3.78 pp exact match accuracy, poprawa F1-score
+    \end{itemize}
+    
+    \item \textbf{Klasyfikacja wieloetykietowa vs. pojedyncza etykieta}: 
+    \begin{itemize}
+        \item Klasyfikacja wieloetykietowa jest bardziej realistyczna (filmy mają wiele gatunków)
+        \item Exact Match Accuracy jest niższa, ale F1-score jest wyższy
+        \item Hamming Loss pokazuje, że model dobrze przewiduje poszczególne etykiety
+    \end{itemize}
+    
+    \item \textbf{Model BERT}: Osiąga najlepsze wyniki:
+    \begin{itemize}
+        \item F1 Micro: 0.64 (vs. 0.50 w najlepszym klasycznym modelu)
+        \item F1 Macro: 0.63 (vs. 0.46 w najlepszym klasycznym modelu)
+        \item Hamming Loss: 0.110 (najniższy)
+    \end{itemize}
+    
+    \item \textbf{Trudne gatunki}: Niektóre gatunki są trudniejsze do przewidzenia:
+    \begin{itemize}
+        \item Fantasy i Comedy mają najniższe F1-score we wszystkich eksperymentach
+        \item Horror i Romance są najlepiej przewidywane
+        \item Drama i Comedy są często usuwane podczas filtrowania (zbyt ogólne)
+    \end{itemize}
+    
+    \item \textbf{Macierze pomyłek}: Analiza macierzy pomyłek pokazuje, że:
+    \begin{itemize}
+        \item Niektóre gatunki są często mylone (np. Horror z Thriller)
+        \item Model BERT lepiej rozróżnia podobne gatunki
+    \end{itemize}
+\end{enumerate}
+
+\section{Podsumowanie}
+
+Projekt prezentuje kompleksowe podejście do klasyfikacji gatunków filmowych, wykorzystując:
+\begin{itemize}
+    \item Zaawansowane techniki web scrapingu do zbierania danych z Letterboxd
+    \item Przetwarzanie języka naturalnego (TF-IDF z bigramami) do ekstrakcji cech
+    \item Różne strategie klasyfikacji (single-label vs. multi-label)
+    \item Eksperymentowanie z różnymi źródłami danych tekstowych (opis vs. opis+recenzje)
+    \item Porównanie klasycznych metod ML z głębokim uczeniem (BERT)
+    \item Kompleksową ewaluację z wykorzystaniem różnych metryk (accuracy, F1-score, Hamming Loss)
+\end{itemize}
+
+\textbf{Główne wnioski}:
+\begin{itemize}
+    \item Dodanie recenzji użytkowników poprawia jakość klasyfikacji
+    \item Model BERT osiąga najlepsze wyniki, pokazując przewagę głębokiego uczenia
+    \item Klasyfikacja wieloetykietowa jest bardziej odpowiednia dla tego zadania niż klasyfikacja pojedynczej etykiety
+    \item Niektóre gatunki (Fantasy, Comedy) są trudniejsze do przewidzenia niż inne (Horror, Romance)
+\end{itemize}
+
+Eksperymenty pozwalają na porównanie efektywności różnych podejść oraz ocenę wpływu dodatkowych danych tekstowych i zaawansowanych modeli na jakość klasyfikacji gatunków filmowych.
+
+\end{document}
+

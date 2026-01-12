@@ -3,7 +3,7 @@ import json
 from collections import Counter
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split, GridSearchCV, learning_curve
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
@@ -104,6 +104,26 @@ def single_label_experiment(df: pd.DataFrame, text_col: str, out_folder: Path, d
 
     else:
         pipe.fit(X_train, y_train)
+    
+    # Generate learning curves
+    train_sizes = np.linspace(0.1, 1.0, 10)
+    train_sizes_abs, train_scores, val_scores = learning_curve(
+        pipe, X_train, y_train, 
+        train_sizes=train_sizes,
+        cv=3,
+        scoring='f1_macro',
+        n_jobs=-1,
+        random_state=42
+    )
+    
+    learning_data = {
+        'train_sizes': train_sizes_abs.tolist(),
+        'train_scores_mean': train_scores.mean(axis=1).tolist(),
+        'train_scores_std': train_scores.std(axis=1).tolist(),
+        'val_scores_mean': val_scores.mean(axis=1).tolist(),
+        'val_scores_std': val_scores.std(axis=1).tolist()
+    }
+    (out_folder / 'learning_curve.json').write_text(json.dumps(learning_data, ensure_ascii=False, indent=2), encoding='utf-8')
 
     y_pred = pipe.predict(X_test)
     strict_acc = accuracy_score(y_test, y_pred)

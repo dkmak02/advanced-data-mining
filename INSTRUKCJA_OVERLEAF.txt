@@ -1,0 +1,49 @@
+INSTRUKCJA DLA OVERLEAF
+=======================
+
+1. Zaloguj się na https://www.overleaf.com
+
+2. Utwórz nowy projekt:
+   - Kliknij "New Project"
+   - Wybierz "Blank Project"
+   - Nadaj nazwę (np. "Klasyfikacja Gatunków Filmowych")
+
+3. Skopiuj zawartość pliku opis_projektu.tex:
+   - Otwórz plik opis_projektu.tex w edytorze
+   - Skopiuj całą zawartość (Ctrl+A, Ctrl+C)
+   - W Overleaf kliknij na plik main.tex (lub utwórz nowy plik)
+   - Wklej zawartość (Ctrl+V)
+   - Zapisz plik
+
+4. Kompilacja:
+   - Overleaf automatycznie skompiluje dokument
+   - Jeśli pojawią się błędy, sprawdź logi kompilacji
+   - Upewnij się, że kompilator jest ustawiony na "pdfLaTeX" (Settings -> Compiler)
+
+5. Jeśli pojawią się problemy:
+   - Sprawdź, czy wszystkie pakiety są dostępne (Overleaf ma większość pakietów)
+   - Jeśli brakuje pakietów, Overleaf zaproponuje ich instalację
+   - Upewnij się, że kodowanie pliku to UTF-8
+
+6. Pobieranie PDF:
+   - Po udanej kompilacji kliknij "Download PDF" w prawym górnym rogu
+
+UWAGA:
+- Dokument używa polskich znaków, więc ważne jest kodowanie UTF-8
+- Wszystkie potrzebne pakiety są standardowe i dostępne w Overleaf
+- Nie są potrzebne żadne dodatkowe pliki (obrazy, bibliografia itp.)
+
+PAKIETY UŻYWANE W DOKUMENCIE:
+- article (klasa dokumentu)
+- babel (obsługa języka polskiego)
+- amsmath, amsfonts, amssymb (matematyka)
+- graphicx (grafika)
+- listings (kod źródłowy)
+- xcolor (kolory)
+- hyperref (hiperłącza)
+- geometry (marginesy)
+- booktabs (tabele)
+- url (adresy URL)
+
+Wszystkie te pakiety są dostępne w Overleaf domyślnie.
+
